@@ -20,9 +20,11 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
+                default_target_path:            /home
 
             logout:       true
             anonymous:    true
+            
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
@@ -31,3 +33,4 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        

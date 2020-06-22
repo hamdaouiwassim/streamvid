@@ -28,7 +28,12 @@ class VideosController extends AbstractController
      */
     public function addvideo()
     {
-        return $this->render('videos/ajoutVideo.html.twig');
+        if ( $this->getUser()->getRoles()[0] == "ROLE_ADMIN" ){
+            return $this->render('videos/ajoutVideo.html.twig');
+        }else{
+           return  $this->redirect("/");
+        }
+        
     }
 
      /**
@@ -75,6 +80,27 @@ class VideosController extends AbstractController
            
            return new Response("files uploaded");
             
+
+    }
+
+
+    /**
+     * @Route("/video/{id}/show", name="showvideo")
+     */
+    public function show($id){
+                    $video = $this->getDoctrine()
+                    ->getRepository(Video::class)
+                    ->find($id);
+
+                    if ( $this->getUser()->getRoles()[0] == "ROLE_ADMIN"){
+                        return  $this->render('admin/videos/show.html.twig',[
+                            'video' => $videos,
+                        ]);
+                        }else{
+                                    return  $this->render('users/videos/show.html.twig',[
+                                        'video' => $video,
+                                    ]);
+                        }
 
     }
 
